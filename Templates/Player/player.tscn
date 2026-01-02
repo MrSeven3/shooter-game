@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://4ui0eq8mrsf0"]
+[gd_scene load_steps=6 format=3 uid="uid://4ui0eq8mrsf0"]
+
+[ext_resource type="Script" uid="uid://d08ngyimvodqp" path="res://Templates/Player/player.gd" id="1_5ufuw"]
+[ext_resource type="Script" uid="uid://mtjdmimhc7ye" path="res://Templates/Player/escape_menu.gd" id="2_xanww"]
+[ext_resource type="LabelSettings" uid="uid://bdb4q53h8yxpp" path="res://Resources/Settings/LabelSettings/title.tres" id="3_bdr43"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wndi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_5ufuw"]
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_5ufuw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -18,3 +23,110 @@ mesh = SubResource("CapsuleMesh_5ufuw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraAnchor"]
+
+[node name="EscapeMenu" type="Control" parent="CameraAnchor/Camera3D"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("2_xanww")
+
+[node name="Title" type="Label" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 64.0
+offset_right = 1176.0
+offset_bottom = 152.0
+text = "Game Paused"
+label_settings = ExtResource("3_bdr43")
+
+[node name="QuitButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 512.0
+offset_right = 1072.0
+offset_bottom = 573.0
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="ResumeButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 432.0
+offset_right = 1072.0
+offset_bottom = 496.0
+theme_override_font_sizes/font_size = 32
+text = "Resume"
+
+[node name="DebugUI" type="Control" parent="CameraAnchor/Camera3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="MovementReadout" type="Control" parent="CameraAnchor/Camera3D/DebugUI"]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Velocity" type="Label" parent="CameraAnchor/Camera3D/DebugUI/MovementReadout"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "VelX: Null VelY: Null VelZ: Null"
+
+[node name="TargetVelocity" type="Label" parent="CameraAnchor/Camera3D/DebugUI/MovementReadout"]
+layout_mode = 0
+offset_top = 22.0
+offset_right = 229.0
+offset_bottom = 45.0
+text = "TVelX: Null TVelY: Null TVelZ: Null"
+
+[node name="Position" type="Label" parent="CameraAnchor/Camera3D/DebugUI/MovementReadout"]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 240.0
+offset_bottom = 67.0
+text = "PosX: Null PosY: Null PosZ: Null"
+
+[node name="Gravity" type="Label" parent="CameraAnchor/Camera3D/DebugUI/MovementReadout"]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 240.0
+offset_bottom = 89.0
+text = "Gravity: Error"
+
+[node name="OtherReadout" type="Control" parent="CameraAnchor/Camera3D/DebugUI"]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="GameRunningIndicator" type="Label" parent="CameraAnchor/Camera3D/DebugUI/OtherReadout"]
+layout_mode = 0
+offset_left = 1656.0
+offset_right = 1920.0
+offset_bottom = 23.0
+text = "Game Running: Error"
+horizontal_alignment = 2
+
+[node name="MoveAllowedIndicator" type="Label" parent="CameraAnchor/Camera3D/DebugUI/OtherReadout"]
+layout_mode = 0
+offset_left = 1656.0
+offset_top = 22.0
+offset_right = 1920.0
+offset_bottom = 45.0
+text = "Move Allowed: Error"
+horizontal_alignment = 2
+
+[node name="OnFloorIndicator" type="Label" parent="CameraAnchor/Camera3D/DebugUI/OtherReadout"]
+layout_mode = 0
+offset_left = 1656.0
+offset_top = 44.0
+offset_right = 1920.0
+offset_bottom = 67.0
+text = "On Floor: Error"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]

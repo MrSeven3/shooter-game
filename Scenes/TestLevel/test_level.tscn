@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://0fetnx7jhttg"]
+
+[ext_resource type="Script" uid="uid://2i000x8tikqd" path="res://Scenes/TestLevel/test_level.gd" id="1_rwfd3"]
+[ext_resource type="PackedScene" uid="uid://4ui0eq8mrsf0" path="res://Templates/Player/player.tscn" id="1_x0ot4"]
+[ext_resource type="Texture2D" uid="uid://c8oibeuepp4f5" path="res://Resources/Textures/Placeholder/PNG/Dark/texture_13.png" id="2_rwfd3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x0ot4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_rwfd3"]
+sky_material = SubResource("ProceduralSkyMaterial_x0ot4")
+
+[sub_resource type="Environment" id="Environment_fs8d8"]
+background_mode = 2
+sky = SubResource("Sky_rwfd3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fs8d8"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hxiqs"]
+albedo_texture = ExtResource("2_rwfd3")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_xvj68"]
+material = SubResource("StandardMaterial3D_hxiqs")
+size = Vector3(20, 1, 20)
+
+[node name="TestLevel" type="Node3D"]
+script = ExtResource("1_rwfd3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fs8d8")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 18.763824, 5.299401, -50.322227)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_x0ot4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+shape = SubResource("BoxShape3D_fs8d8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+mesh = SubResource("BoxMesh_xvj68")
