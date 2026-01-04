@@ -3,14 +3,12 @@ extends CharacterBody3D
 const mouse_sensitivity = 0.002
 
 var sprint_acceleration = 2.5 # running acceleration in m/s
-const max_sprint_speed = 9 # in m/s
 const air_sprint_speed = 1.5 # speed in m/s
 
 const jump_velocity = 8 #no clue what this is measured in or why this seems good
 const terminal_fall_velocity = 25 #in m/s 
 
 var target_velocity = Vector3.ZERO
-var world_target_velocity = Vector3.ZERO
 
 var velocity_increase = Vector3.ZERO
 var single_velocity_multiplier = 1 #multiplier to increase velocity
@@ -85,12 +83,13 @@ func _physics_process(delta: float) -> void:
 		update_debug_readouts()
 	if game_running:
 		velocity.y = clamp(velocity.y,-terminal_fall_velocity,9223372036854775807)
+		
+		
 		if is_on_floor():
 			move_allowed = true
 			target_velocity = Vector3.ZERO
 			
 			var target_acceleration = Vector3.ZERO
-			var relative_acceleration = Vector3.ZERO
 			
 			if should_jump == true: #jumping
 				target_velocity.y += jump_velocity
@@ -106,14 +105,21 @@ func _physics_process(delta: float) -> void:
 			if Input.is_key_pressed(KEY_D):
 				target_acceleration.x += (sprint_acceleration)
 			
-			target_velocity += transform.basis * target_acceleration #rotate movement
+			target_velocity += target_acceleration
+			
+			if single_velocity_multiplier != 1: #adds velocity mutliplier
+				target_velocity *= single_velocity_multiplier
+				print("[Player/Physics] New velocity will be "+str(target_velocity))
+				single_velocity_multiplier = 1
+			
+			target_velocity = transform.basis * target_velocity #rotate movement
 			velocity = target_velocity
 		else:
 			velocity += get_gravity() * delta #Apply gravity
 			move_allowed = false
 			if single_velocity_multiplier != 1: #adds velocity mutliplier
 				velocity *= single_velocity_multiplier
-				print("[Player/Physics] New velocity will be "+str(target_velocity))
+				print("[Player/Physics] New velocity will be "+str(velocity))
 				single_velocity_multiplier = 1
 		
 		move_and_slide()

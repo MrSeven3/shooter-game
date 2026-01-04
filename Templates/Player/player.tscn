@@ -24,41 +24,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraAnchor"]
 
-[node name="EscapeMenu" type="Control" parent="CameraAnchor/Camera3D"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-script = ExtResource("2_xanww")
-
-[node name="Title" type="Label" parent="CameraAnchor/Camera3D/EscapeMenu"]
-layout_mode = 0
-offset_left = 744.0
-offset_top = 64.0
-offset_right = 1176.0
-offset_bottom = 152.0
-text = "Game Paused"
-label_settings = ExtResource("3_bdr43")
-
-[node name="QuitButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
-layout_mode = 0
-offset_left = 848.0
-offset_top = 512.0
-offset_right = 1072.0
-offset_bottom = 573.0
-theme_override_font_sizes/font_size = 32
-text = "Quit"
-
-[node name="ResumeButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
-layout_mode = 0
-offset_left = 848.0
-offset_top = 432.0
-offset_right = 1072.0
-offset_bottom = 496.0
-theme_override_font_sizes/font_size = 32
-text = "Resume"
-
 [node name="DebugUI" type="Control" parent="CameraAnchor/Camera3D"]
 layout_mode = 3
 anchors_preset = 0
@@ -128,5 +93,50 @@ offset_bottom = 67.0
 text = "On Floor: Error"
 horizontal_alignment = 2
 
+[node name="EscapeMenu" type="Control" parent="CameraAnchor/Camera3D"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("2_xanww")
+
+[node name="Title" type="Label" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 64.0
+offset_right = 1176.0
+offset_bottom = 152.0
+text = "Game Paused"
+label_settings = ExtResource("3_bdr43")
+
+[node name="QuitButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 592.0
+offset_right = 1072.0
+offset_bottom = 653.0
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[node name="ResumeButton" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 434.0
+offset_right = 1072.0
+offset_bottom = 498.0
+theme_override_font_sizes/font_size = 32
+text = "Resume"
+
+[node name="Reset" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu"]
+layout_mode = 0
+offset_left = 848.0
+offset_top = 514.0
+offset_right = 1072.0
+offset_bottom = 578.0
+theme_override_font_sizes/font_size = 32
+text = "Reset"
+
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/Reset" to="CameraAnchor/Camera3D/EscapeMenu" method="reset"]
