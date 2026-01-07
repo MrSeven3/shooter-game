@@ -3,8 +3,8 @@ extends CharacterBody3D
 const mouse_sensitivity := 0.002
 
 var sprint_acceleration:float # running acceleration in m/s
-const ground_sprint_speed := 6.5
-const air_sprint_speed := 4.5 # speed in m/s
+var ground_sprint_speed := 6.5
+var air_sprint_speed := 4.5 # speed in m/s
 
 const jump_velocity:float = 8 #no clue what this is measured in or why this seems good
 const terminal_fall_velocity:float = 25 #in m/s 
@@ -67,11 +67,11 @@ func _input(event): #called on inputs(mouse movements and keypressed)
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			$CameraAnchor/Camera3D/EscapeMenu.pause()
 		
-		if event.keycode == KEY_UP and not event.is_echo():
-			sprint_acceleration += 1
+		if event.keycode == KEY_UP and not event.is_echo() and not event.is_released():
+			ground_sprint_speed += 1
 			print("[Player/Input] Movement speed is now "+str(sprint_acceleration))
-		if event.keycode == KEY_DOWN and not event.is_echo():
-			sprint_acceleration -= 1
+		if event.keycode == KEY_DOWN and not event.is_echo() and not event.is_released():
+			ground_sprint_speed -= 1
 			print("[Player/Input] Movement speed is now "+str(sprint_acceleration))
 
 func multiply_all_velocity(multiplier:float) -> void: #function to be called by other things and here, to mutliply velocity
