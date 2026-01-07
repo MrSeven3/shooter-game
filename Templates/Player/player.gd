@@ -72,7 +72,6 @@ func _input(event): #called on inputs(mouse movements and keypressed)
 			sprint_acceleration -= 1
 			print("[Player/Input] Movement speed is now "+str(sprint_acceleration))
 
-
 func multiply_all_velocity(multiplier:float) -> void: #function to be called by other things and here, to mutliply velocity
 	print("[Player/Physics] Velocity multiplier called, multiplying by "+str(multiplier)+" at the end of the current physics frame")
 	single_velocity_multiplier = multiplier
@@ -82,40 +81,54 @@ func _physics_process(delta: float) -> void:
 	if Utils.debug_mode == true:
 		update_debug_readouts()
 	if game_running:
+		var target_acceleration := Vector3.ZERO
 		if is_on_floor():
 			sprint_acceleration = ground_sprint_speed
+			
+
+			# Handle jumping logic
+			if should_jump and is_on_floor():
+				velocity.y = jump_velocity
+				multiply_all_velocity(1.2)
+				should_jump = false
+
+			# Input-based movement
+			if Input.is_key_pressed(KEY_W):
+				target_acceleration.z -= sprint_acceleration 
+			if Input.is_key_pressed(KEY_S):
+				target_acceleration.z += sprint_acceleration
+			if Input.is_key_pressed(KEY_A):
+				target_acceleration.x -= sprint_acceleration
+			if Input.is_key_pressed(KEY_D):
+				target_acceleration.x += sprint_acceleration
+			
+			target_velocity = target_acceleration
+
+			target_acceleration = transform.basis * target_acceleration#rotate the applied movement
+			
+
+			velocity.x = lerp(velocity.x, target_acceleration.x, delta * 10) # Smooth acceleration
+			velocity.z = lerp(velocity.z, target_acceleration.z, delta * 10) # Smooth acceleration
 		else:
 			sprint_acceleration = air_sprint_speed
-		
-		
-		var target_acceleration := Vector3.ZERO
-
-		# Handle jumping logic
-		if should_jump and is_on_floor():
-			velocity.y = jump_velocity
-			multiply_all_velocity(1.2)
-			should_jump = false
-
-		# Input-based movement
-		if Input.is_key_pressed(KEY_W):
-			target_acceleration.z -= sprint_acceleration 
-		if Input.is_key_pressed(KEY_S):
-			target_acceleration.z += sprint_acceleration
-		if Input.is_key_pressed(KEY_A):
-			target_acceleration.x -= sprint_acceleration
-		if Input.is_key_pressed(KEY_D):
-			target_acceleration.x += sprint_acceleration
-
-		# Rotate movement to align with player orientation
-		target_acceleration = transform.basis * target_acceleration
-
-		# Acceleration towards target velocityq
-		velocity.x = lerp(velocity.x, target_acceleration.x, delta * 10) # Smooth acceleration
-		velocity.z = lerp(velocity.z, target_acceleration.z, delta * 10) # Smooth acceleration
-		
-		if not is_on_floor():
 			velocity += get_gravity() * delta
+			
+			# Input-based movement
+			if Input.is_key_pressed(KEY_W):
+				target_acceleration.z -= sprint_acceleration 
+			if Input.is_key_pressed(KEY_S):
+				target_acceleration.z += sprint_acceleration
+			if Input.is_key_pressed(KEY_A):
+				target_acceleration.x -= sprint_acceleration
+			if Input.is_key_pressed(KEY_D):
+				target_acceleration.x += sprint_acceleration
+			
+			target_velocity = target_acceleration
+			target_acceleration = transform.basis * target_acceleration#rotate the applied movement		
 
+			velocity.x = lerp(velocity.x, target_acceleration.x, delta * 10) # Smooth acceleration
+			velocity.z = lerp(velocity.z, target_acceleration.z, delta * 10) # Smooth acceleration
+		
 		# Apply any global velocity multiplier
 		if single_velocity_multiplier != 1:
 			velocity *= single_velocity_multiplier
