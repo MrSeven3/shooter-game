@@ -3,11 +3,13 @@ extends CharacterBody3D
 const mouse_sensitivity := 0.002
 
 var sprint_acceleration:float # running acceleration in m/s
-const air_sprint_speed := 1.5 # speed in m/s
-const ground_sprint_speed := 2.5
+const ground_sprint_speed := 6.5
+const air_sprint_speed := 4.5 # speed in m/s
 
 const jump_velocity:float = 8 #no clue what this is measured in or why this seems good
 const terminal_fall_velocity:float = 25 #in m/s 
+
+const jump_speed_mult := 1.1
 
 var target_velocity := Vector3.ZERO
 
@@ -103,7 +105,6 @@ func _physics_process(delta: float) -> void:
 				target_acceleration.x += sprint_acceleration
 			
 			target_velocity = target_acceleration
-
 			target_acceleration = transform.basis * target_acceleration#rotate the applied movement
 			
 
@@ -125,9 +126,9 @@ func _physics_process(delta: float) -> void:
 			
 			target_velocity = target_acceleration
 			target_acceleration = transform.basis * target_acceleration#rotate the applied movement		
-
-			velocity.x = lerp(velocity.x, target_acceleration.x, delta * 10) # Smooth acceleration
-			velocity.z = lerp(velocity.z, target_acceleration.z, delta * 10) # Smooth acceleration
+			
+			velocity.x += target_acceleration.x * delta
+			velocity.z += target_acceleration.z * delta
 		
 		# Apply any global velocity multiplier
 		if single_velocity_multiplier != 1:

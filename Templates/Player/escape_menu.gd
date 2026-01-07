@@ -16,4 +16,4 @@ func reset() -> void:
 	get_tree().reload_current_scene()
 
 func quit() -> void:
-	Utils.close_game()
+	get_tree().change_scene_to_file("res://Scenes/MainMenu/main_menu.tscn")
