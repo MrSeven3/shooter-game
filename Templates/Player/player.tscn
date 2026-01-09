@@ -137,6 +137,12 @@ offset_bottom = 578.0
 theme_override_font_sizes/font_size = 32
 text = "Reset"
 
+[node name="GameUI" type="Control" parent="CameraAnchor/Camera3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/Reset" to="CameraAnchor/Camera3D/EscapeMenu" method="reset"]

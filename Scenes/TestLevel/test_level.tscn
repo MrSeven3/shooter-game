@@ -1,8 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://0fetnx7jhttg"]
+[gd_scene load_steps=18 format=4 uid="uid://0fetnx7jhttg"]
 
 [ext_resource type="Script" uid="uid://2i000x8tikqd" path="res://Scenes/TestLevel/test_level.gd" id="1_rwfd3"]
 [ext_resource type="PackedScene" uid="uid://4ui0eq8mrsf0" path="res://Templates/Player/player.tscn" id="1_x0ot4"]
-[ext_resource type="Texture2D" uid="uid://c8oibeuepp4f5" path="res://Resources/Textures/Placeholder/PNG/Dark/texture_13.png" id="2_rwfd3"]
+[ext_resource type="Material" uid="uid://b7frbphbgshuu" path="res://Resources/Settings/Materials/grey_dev_1x1m_grid.tres" id="3_rwfd3"]
+[ext_resource type="Material" uid="uid://iw86urue0gu" path="res://Resources/Settings/Materials/void_white.tres" id="4_hxiqs"]
+[ext_resource type="Material" uid="uid://bd0tvkmnn0c56" path="res://Resources/Settings/Materials/void.tres" id="5_xvj68"]
+[ext_resource type="Material" uid="uid://buryb34oul7bd" path="res://Resources/Settings/Materials/bullet.tres" id="6_xvj68"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fs8d8"]
+size = Vector3(2048, 1, 2048)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xvj68"]
+material = ExtResource("3_rwfd3")
+size = Vector3(2048, 1, 2048)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x0ot4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,36 +25,93 @@ sky_material = SubResource("ProceduralSkyMaterial_x0ot4")
 background_mode = 2
 sky = SubResource("Sky_rwfd3")
 tonemap_mode = 2
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
 glow_enabled = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fs8d8"]
-size = Vector3(20, 1, 20)
+[sub_resource type="BoxMesh" id="BoxMesh_eoe8x"]
+material = ExtResource("4_hxiqs")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hxiqs"]
-albedo_texture = ExtResource("2_rwfd3")
-uv1_triplanar = true
+[sub_resource type="BoxMesh" id="BoxMesh_rf0n2"]
+material = ExtResource("5_xvj68")
 
-[sub_resource type="BoxMesh" id="BoxMesh_xvj68"]
-material = SubResource("StandardMaterial3D_hxiqs")
-size = Vector3(20, 1, 20)
+[sub_resource type="BoxMesh" id="BoxMesh_i41c6"]
+material = ExtResource("3_rwfd3")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sdca5"]
+material = ExtResource("6_xvj68")
+radius = 0.1
+height = 0.75
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx1fw"]
+radius = 0.1
+height = 0.75
+
+[sub_resource type="VoxelGIData" id="VoxelGIData_eoe8x"]
+_data = {
+"bounds": AABB(-10, -10, -10, 20, 20, 20),
+"level_counts": PackedInt32Array(1, 0, 0, 0, 0, 0, 0, 0),
+"octree_cells": PackedByteArray("//////////////////////////////////////////8="),
+"octree_data": PackedByteArray("AAAAAAAAAAAAAAAAAAAAAA=="),
+"octree_df_png": PackedByteArray("iVBORw0KGgoAAAANSUhEUgAAQAAAAACACAAAAADWGC75AAAAAXNSR0IArs4c6QAACVpJREFUeJzt3DEBACAMwDDAv+chYz0SBVXQOwcAAAAAAAAAAAAAAAAAAADY9rYDAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAASDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAAAMAAAAAAAAAAAAAAAAAAAAACDAAAAAAAAAAAAAAAAAAAAAAgAADAAAAAAAAAAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAAAAAAIAAAwAAAAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAAAAAAAACAgA+PLgH/G4ja2wAAAABJRU5ErkJggg=="),
+"octree_size": Vector3(128, 128, 128),
+"to_cell_xform": Transform3D(6.4, 0, 0, 0, 6.4, 0, 0, 0, 6.4, 64, 64, 64)
+}
 
 [node name="TestLevel" type="Node3D"]
 script = ExtResource("1_rwfd3")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_fs8d8")
-
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 18.763824, 5.299401, -50.322227)
+transform = Transform3D(-0.8660255, -0.4829631, 0.12940955, 0.35355347, -0.40849376, 0.84150636, -0.35355344, 0.77451897, 0.524519, 18.763824, 5.299401, -50.322227)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_x0ot4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+[node name="Floor" type="AnimatableBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_fs8d8")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="AnimatableBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_xvj68")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fs8d8")
+
+[node name="MaterialTest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5)
+
+[node name="Void" type="MeshInstance3D" parent="MaterialTest"]
+mesh = SubResource("BoxMesh_eoe8x")
+
+[node name="VoidWhite" type="MeshInstance3D" parent="MaterialTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+mesh = SubResource("BoxMesh_rf0n2")
+
+[node name="Dev" type="MeshInstance3D" parent="MaterialTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_i41c6")
+
+[node name="Bullet" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -5)
+metadata/Speed = 0.0
+metadata/Damage = 0.0
+metadata/Origin = ""
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bullet"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_sdca5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bullet"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_vx1fw")
+
+[node name="VoxelGI" type="VoxelGI" parent="Bullet"]
+data = SubResource("VoxelGIData_eoe8x")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Bullet"]
+light_color = Color(0, 0.18039216, 1, 1)
+shadow_enabled = true
+omni_range = 3.0

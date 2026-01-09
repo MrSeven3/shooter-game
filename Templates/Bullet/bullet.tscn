@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwnjkyidj8mgy"]
+
+[ext_resource type="Material" uid="uid://buryb34oul7bd" path="res://Resources/Settings/Materials/bullet.tres" id="1_vx1fw"]
+[ext_resource type="VoxelGIData" uid="uid://d0t53n3uu8g5s" path="res://Templates/Bullet/bullet.VoxelGI_data.res" id="2_pk6mp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sdca5"]
+material = ExtResource("1_vx1fw")
+radius = 0.1
+height = 0.75
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx1fw"]
+radius = 0.1
+height = 0.75
+
+[node name="Bullet" type="CharacterBody3D"]
+metadata/Speed = 0.0
+metadata/Damage = 0.0
+metadata/Origin = ""
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+gi_mode = 2
+mesh = SubResource("CapsuleMesh_sdca5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_vx1fw")
+
+[node name="VoxelGI" type="VoxelGI" parent="."]
+data = ExtResource("2_pk6mp")

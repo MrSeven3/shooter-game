@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const mouse_sensitivity := 0.002
+const mouse_sensitivity := 0.0015
 
 var sprint_acceleration:float # running acceleration in m/s
 var ground_sprint_speed := 6.5
@@ -62,7 +62,6 @@ func _input(event): #called on inputs(mouse movements and keypressed)
 			should_jump = true
 		
 		if event.keycode == KEY_ESCAPE and not event.is_echo():
-			
 			set_physics_process(false)
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			$CameraAnchor/Camera3D/EscapeMenu.pause()
@@ -77,7 +76,6 @@ func _input(event): #called on inputs(mouse movements and keypressed)
 func multiply_all_velocity(multiplier:float) -> void: #function to be called by other things and here, to mutliply velocity
 	print("[Player/Physics] Velocity multiplier called, multiplying by "+str(multiplier)+" at the end of the current physics frame")
 	single_velocity_multiplier = multiplier
-
 
 func _physics_process(delta: float) -> void:
 	if Utils.debug_mode == true:
