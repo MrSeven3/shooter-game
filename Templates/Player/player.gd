@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+signal test_fire()
 const mouse_sensitivity := 0.0015
 
 var sprint_acceleration:float # running acceleration in m/s
@@ -19,12 +20,27 @@ var single_velocity_multiplier:float = 1 #multiplier to increase velocity
 var game_running:bool = false
 var should_jump:bool = false #variable that is true when the player should jump on the next physics tick
 
+var equipped_weapon:String
+
+const hitscan_weapons:Array = ["railgun"]
+
+const weapons:Dictionary = {
+	"railgun":{"damage":50,"range":256}
+	}
+
 func start_game() -> void:
 	game_running = true
 
 func hit_scan_shot() -> void:
-	var end_point:Vector3 = $CameraAnchor/HitScanRay.get_collision_point()
+	var end_point:Vector3 = $CameraAnchor/HitscanRay.get_collision_point()
+	var distance:float = position.distance_to(end_point)
 	
+
+func equip_weapon(weapon:StringName) -> void:
+	if weapon in weapons:
+		equipped_weapon = weapon
+	else:
+		push_error("Attempted to equip invalid weapon: " + weapon)
 
 func update_velocity_feed() -> void: #updates a debug feed for velocities
 	#actual velocities
@@ -74,8 +90,12 @@ func _input(event): #called on inputs(mouse movements and keypressed)
 			ground_sprint_speed += 1
 			print("[Player/Input] Movement speed is now "+str(sprint_acceleration))
 		if event.keycode == KEY_DOWN and not event.is_echo() and not event.is_released():
+			
 			ground_sprint_speed -= 1
 			print("[Player/Input] Movement speed is now "+str(sprint_acceleration))
+		
+		if event.keycode == KEY_T and not event.is_echo() and not event.is_released():
+			test_fire.emit()
 
 func multiply_all_velocity(multiplier:float) -> void: #function to be called by other things and here, to mutliply velocity
 	print("[Player/Physics] Velocity multiplier called, multiplying by "+str(multiplier)+" at the end of the current physics frame")

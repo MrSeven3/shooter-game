@@ -149,7 +149,8 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="HitScanRay" type="RayCast3D" parent="CameraAnchor"]
+[node name="HitscanRay" type="RayCast3D" parent="CameraAnchor"]
+visible = false
 target_position = Vector3(0, 0, -256)
 
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
