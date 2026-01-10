@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://4ui0eq8mrsf0"]
+[gd_scene load_steps=8 format=3 uid="uid://4ui0eq8mrsf0"]
 
 [ext_resource type="Script" uid="uid://d08ngyimvodqp" path="res://Templates/Player/player.gd" id="1_5ufuw"]
+[ext_resource type="Texture2D" uid="uid://c8oibeuepp4f5" path="res://Resources/KennyTemp/DevTextures/PNG/Dark/texture_13.png" id="2_bdr43"]
 [ext_resource type="Script" uid="uid://mtjdmimhc7ye" path="res://Templates/Player/escape_menu.gd" id="2_xanww"]
 [ext_resource type="LabelSettings" uid="uid://bdb4q53h8yxpp" path="res://Resources/Settings/LabelSettings/title.tres" id="3_bdr43"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wndi"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e58q"]
+albedo_texture = ExtResource("2_bdr43")
+uv1_offset = Vector3(0, -0.25, 0)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_5ufuw"]
+material = SubResource("StandardMaterial3D_6e58q")
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_5ufuw")
@@ -142,6 +148,9 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+
+[node name="HitScanRay" type="RayCast3D" parent="CameraAnchor"]
+target_position = Vector3(0, 0, -256)
 
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]

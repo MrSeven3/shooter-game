@@ -22,6 +22,10 @@ var should_jump:bool = false #variable that is true when the player should jump 
 func start_game() -> void:
 	game_running = true
 
+func hit_scan_shot() -> void:
+	var end_point:Vector3 = $CameraAnchor/HitScanRay.get_collision_point()
+	
+
 func update_velocity_feed() -> void: #updates a debug feed for velocities
 	#actual velocities
 	var velX = snapped(velocity.x,0.1)

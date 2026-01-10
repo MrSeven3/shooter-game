@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://domlwwqcquo5l"]
+
+[ext_resource type="Script" uid="uid://7esaapuaod85" path="res://Templates/Shots/InstaRay/insta_ray.gd" id="1_aqsrc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqsrc"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 32.85
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_aqsrc"]
+material = SubResource("StandardMaterial3D_aqsrc")
+radius = 0.05
+
+[sub_resource type="Animation" id="Animation_qlaf0"]
+resource_name = "IntaRayFire"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.2, 1.6333333, 1.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.001, 0.009999999999999998, 0.05, 0.05, 0.001]
+}
+
+[sub_resource type="Animation" id="Animation_7fceb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8lxi2"]
+_data = {
+&"IntaRayFire": SubResource("Animation_qlaf0"),
+&"RESET": SubResource("Animation_7fceb")
+}
+
+[node name="InstaRay" type="CharacterBody3D"]
+script = ExtResource("1_aqsrc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_aqsrc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8lxi2")
+}

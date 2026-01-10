@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cgll1xa6fvcbd"]
+
+[ext_resource type="Texture2D" uid="uid://cp7r2prel7yss" path="res://Resources/KennyTemp/DevTextures/Vector/texture_02.svg" id="1_bd0tk"]
+
+[resource]
+albedo_texture = ExtResource("1_bd0tk")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
