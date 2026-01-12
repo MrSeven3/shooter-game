@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://4ui0eq8mrsf0"]
+[gd_scene load_steps=9 format=3 uid="uid://4ui0eq8mrsf0"]
 
 [ext_resource type="Script" uid="uid://d08ngyimvodqp" path="res://Templates/Player/player.gd" id="1_5ufuw"]
 [ext_resource type="Texture2D" uid="uid://c8oibeuepp4f5" path="res://Resources/KennyTemp/DevTextures/PNG/Dark/texture_13.png" id="2_bdr43"]
 [ext_resource type="Script" uid="uid://mtjdmimhc7ye" path="res://Templates/Player/escape_menu.gd" id="2_xanww"]
 [ext_resource type="LabelSettings" uid="uid://bdb4q53h8yxpp" path="res://Resources/Settings/LabelSettings/title.tres" id="3_bdr43"]
+[ext_resource type="Texture2D" uid="uid://ce7dp5kngrka1" path="res://Resources/KennyTemp/Crosshair/PNG/White/crosshair051.png" id="5_6e58q"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wndi"]
 
@@ -99,8 +100,26 @@ offset_bottom = 67.0
 text = "On Floor: Error"
 horizontal_alignment = 2
 
+[node name="PhysicsProcessIndicator" type="Label" parent="CameraAnchor/Camera3D/DebugUI/OtherReadout"]
+layout_mode = 0
+offset_left = 1656.0
+offset_top = 66.0
+offset_right = 1920.0
+offset_bottom = 89.0
+text = "Physics Processing: Error"
+horizontal_alignment = 2
+
+[node name="GameUI" type="Control" parent="CameraAnchor/Camera3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Crosshair051" type="Sprite2D" parent="CameraAnchor/Camera3D/GameUI"]
+position = Vector2(960, 540)
+texture = ExtResource("5_6e58q")
+
 [node name="EscapeMenu" type="Control" parent="CameraAnchor/Camera3D"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -143,16 +162,40 @@ offset_bottom = 578.0
 theme_override_font_sizes/font_size = 32
 text = "Reset"
 
-[node name="GameUI" type="Control" parent="CameraAnchor/Camera3D"]
-layout_mode = 3
+[node name="DevEscapeMenu" type="Control" parent="CameraAnchor/Camera3D/EscapeMenu"]
 anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_left = 520.0
+offset_top = 184.0
+offset_right = 824.0
+offset_bottom = 960.0
+
+[node name="ResetPos" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 256.0
+offset_right = 288.0
+offset_bottom = 354.0
+theme_override_font_sizes/font_size = 32
+text = "Reset Position to
+Origin(y+0.5)"
+
+[node name="ResetRot" type="Button" parent="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 360.0
+offset_right = 288.0
+offset_bottom = 458.0
+theme_override_font_sizes/font_size = 32
+text = "Reset Rotation"
 
 [node name="HitscanRay" type="RayCast3D" parent="CameraAnchor"]
-visible = false
 target_position = Vector3(0, 0, -256)
 
+[connection signal="resume_game" from="CameraAnchor/Camera3D/EscapeMenu" to="." method="resume_game"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/Reset" to="CameraAnchor/Camera3D/EscapeMenu" method="reset"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu/ResetPos" to="." method="pos_reset"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu/ResetPos" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu/ResetRot" to="." method="rot_reset"]
+[connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/DevEscapeMenu/ResetRot" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]

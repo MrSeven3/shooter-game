@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://0fetnx7jhttg"]
+[gd_scene load_steps=19 format=3 uid="uid://0fetnx7jhttg"]
 
 [ext_resource type="Script" uid="uid://2i000x8tikqd" path="res://Scenes/TestLevel/Scripts/test_level.gd" id="1_rwfd3"]
 [ext_resource type="PackedScene" uid="uid://4ui0eq8mrsf0" path="res://Templates/Player/player.tscn" id="1_x0ot4"]
@@ -34,6 +34,8 @@ glow_blend_mode = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_eoe8x"]
 material = ExtResource("4_hxiqs")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rf0n2"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rf0n2"]
 material = ExtResource("5_xvj68")
@@ -71,13 +73,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5)
 [node name="Void" type="MeshInstance3D" parent="MaterialTest"]
 mesh = SubResource("BoxMesh_eoe8x")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="MaterialTest/Void"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MaterialTest/Void/StaticBody3D"]
+shape = SubResource("BoxShape3D_rf0n2")
+
 [node name="VoidWhite" type="MeshInstance3D" parent="MaterialTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 mesh = SubResource("BoxMesh_rf0n2")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="MaterialTest/VoidWhite"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MaterialTest/VoidWhite/StaticBody3D"]
+shape = SubResource("BoxShape3D_rf0n2")
+
 [node name="Dev" type="MeshInstance3D" parent="MaterialTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 mesh = SubResource("BoxMesh_i41c6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MaterialTest/Dev"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MaterialTest/Dev/StaticBody3D"]
+shape = SubResource("BoxShape3D_rf0n2")
 
 [node name="InstaRay" parent="." instance=ExtResource("8_rf0n2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -3)
@@ -98,5 +115,4 @@ font_size = 64
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WeaponEquip/Railgun/Area3D"]
 shape = SubResource("BoxShape3D_eoe8x")
 
-[connection signal="test_fire" from="Player" to="InstaRay" method="test"]
 [connection signal="body_entered" from="WeaponEquip/Railgun/Area3D" to="WeaponEquip" method="equip_railgun"]

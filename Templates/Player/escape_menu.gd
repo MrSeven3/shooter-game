@@ -1,14 +1,18 @@
 extends Control
-signal resume_game 
+signal resume_game
 
-
+func _ready() -> void:
+	visible = false
+	if Utils.debug_mode == true:
+		$DevEscapeMenu.visible = true
+	else:
+		$DevEscapeMenu.visible = false
 
 func pause() -> void: #called from main player script
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	visible = true
 
 func resume() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	visible = false
 	resume_game.emit()
 
