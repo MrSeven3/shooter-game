@@ -51,16 +51,14 @@ func hit_scan_shot() -> Array:
 		return [true,distance,end_point,hit_object]
 	else:
 		var distance:float = -$CameraAnchor/HitscanRay.target_position.z
-		var ray_end_point:Vector3 = position + Vector3(0,0,-distance)
-		
-		var rotated_end_point:Vector3 = $CameraAnchor.global_transform.basis * ray_end_point
+		var end_point = $CameraAnchor/HitscanRay/RayEndMarker.global_position
 		
 		#ray debug
-		var marker = debug_marker_scene.instantiate()
-		marker.position = rotated_end_point
-		root.add_child(marker)
+		#var marker = debug_marker_scene.instantiate()
+		#marker.position = end_point
+		#root.add_child(marker)
 		
-		return [false,distance,rotated_end_point,null]
+		return [false,distance,end_point,null]
 	
 
 func equip_weapon(weapon:StringName) -> void:
@@ -77,10 +75,6 @@ func shoot() -> void:
 		var hit_point:Vector3 = shot_result[2]
 		match equipped_weapon:
 			"railgun":
-				#print("shooting railgun")
-				var debug_pos1 = position
-				var debug_pos2 = global_position
-				var debug_pos3 = $CameraAnchor.global_position
 				var beam_spawnpoint:Vector3 = (hit_point + $CameraAnchor.global_position)/2 #find the middle of the two vectors
 				var beam = beam_scene.instantiate()
 				

@@ -191,6 +191,10 @@ text = "Reset Rotation"
 [node name="HitscanRay" type="RayCast3D" parent="CameraAnchor"]
 target_position = Vector3(0, 0, -256)
 
+[node name="RayEndMarker" type="Marker3D" parent="CameraAnchor/HitscanRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -256)
+visible = false
+
 [connection signal="resume_game" from="CameraAnchor/Camera3D/EscapeMenu" to="." method="resume_game"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/QuitButton" to="CameraAnchor/Camera3D/EscapeMenu" method="quit"]
 [connection signal="pressed" from="CameraAnchor/Camera3D/EscapeMenu/ResumeButton" to="CameraAnchor/Camera3D/EscapeMenu" method="resume"]
