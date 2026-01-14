@@ -3,6 +3,9 @@ extends CharacterBody3D
 const mouse_sensitivity := 0.0015
 
 var beam_scene:Resource
+var debug_marker_scene:Resource
+
+@onready var root := get_node("/root")
 
 var sprint_acceleration:float # running acceleration in m/s
 var ground_sprint_speed := 6.5
@@ -48,9 +51,15 @@ func hit_scan_shot() -> Array:
 		return [true,distance,end_point,hit_object]
 	else:
 		var distance:float = -$CameraAnchor/HitscanRay.target_position.z
-		var ray_end_point:Vector3 = $CameraAnchor.global_position + Vector3(0,0,-distance)
+		var ray_end_point:Vector3 = position + Vector3(0,0,-distance)
 		
-		var rotated_end_point:Vector3 = transform.basis * ray_end_point
+		var rotated_end_point:Vector3 = $CameraAnchor.global_transform.basis * ray_end_point
+		
+		#ray debug
+		var marker = debug_marker_scene.instantiate()
+		marker.position = rotated_end_point
+		root.add_child(marker)
+		
 		return [false,distance,rotated_end_point,null]
 	
 
@@ -61,18 +70,18 @@ func equip_weapon(weapon:StringName) -> void:
 		push_error("Attempted to equip invalid weapon: " + weapon)
 
 func shoot() -> void:
-	var root = get_node("/root")
-	print("firing")
+	
+	#print("firing")
 	if equipped_weapon in hitscan_weapons:
 		var shot_result := hit_scan_shot()
 		var hit_point:Vector3 = shot_result[2]
 		match equipped_weapon:
 			"railgun":
-				print("shooting railgun")
+				#print("shooting railgun")
 				var debug_pos1 = position
 				var debug_pos2 = global_position
 				var debug_pos3 = $CameraAnchor.global_position
-				var beam_spawnpoint:Vector3 = (hit_point + $CameraAnchor.global_position)/2
+				var beam_spawnpoint:Vector3 = (hit_point + $CameraAnchor.global_position)/2 #find the middle of the two vectors
 				var beam = beam_scene.instantiate()
 				
 				var distance = shot_result[1]
@@ -83,12 +92,15 @@ func shoot() -> void:
 				beam.rotation = Vector3($CameraAnchor.rotation.x,rotation.y,0)
 
 func _ready() -> void:
+	#prep scenes to instantiate
 	beam_scene = load("res://Templates/Shots/InstaRay/insta_ray.tscn")
+	debug_marker_scene = load("res://Templates/debug_marker.tscn")
+	#mouse
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 
 func _input(event): #called on inputs(mouse movements and keypressed)
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED: #moves the camera
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		
 		$CameraAnchor.rotate_x(-event.relative.y * mouse_sensitivity)

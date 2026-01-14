@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbq1hy85qry76"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6iqq"]
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 4096.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_f2ghr"]
+material = SubResource("StandardMaterial3D_b6iqq")
+
+[node name="DebugMarker" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_f2ghr")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 16.0
+omni_range = 35.0

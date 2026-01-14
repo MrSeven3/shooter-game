@@ -48,7 +48,7 @@ func fire(length:float) -> void:
 	$Outline.mesh.height = length
 	$Outline/Beam.mesh.height = length
 	#$Area3D/CollisionShape3D.shape.height = length
-	$AnimationPlayer.play("InstaRayFire")
+	$AnimationPlayer.play("InstaRayFire",-1,2)
 	
 	var needed:int = min(int(length / spacing) + 1, max_lights)
 
